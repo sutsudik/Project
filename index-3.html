@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>503 — Layanan Tidak Tersedia</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #f8f5ed;
+      --text: #17191b;
+      --muted: #85827c;
+      --button: #202020;
+    }
+
+    html, body {
+      width: 100%;
+      min-height: 100%;
+    }
+
+    body {
+      min-height: 100svh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI",
+                   Roboto, Helvetica, Arial, sans-serif;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+      display: grid;
+      place-items: center;
+    }
+
+    .page {
+      width: 100%;
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .content {
+      width: min(100%, 560px);
+      text-align: center;
+      transform: translateY(-1vh);
+      animation: enter .7s cubic-bezier(.2,.75,.25,1) both;
+    }
+
+    .code {
+      font-size: clamp(5.8rem, 27vw, 10rem);
+      line-height: .88;
+      font-weight: 750;
+      letter-spacing: -0.075em;
+      color: var(--text);
+    }
+
+    h1 {
+      margin-top: 2.1rem;
+      font-size: clamp(1.7rem, 7vw, 2.65rem);
+      line-height: 1.12;
+      font-weight: 650;
+      letter-spacing: -0.045em;
+    }
+
+    .message {
+      margin: 1.2rem auto 0;
+      max-width: 390px;
+      color: var(--muted);
+      font-size: clamp(.98rem, 4vw, 1.2rem);
+      line-height: 1.55;
+      letter-spacing: -0.015em;
+    }
+
+    .retry {
+      margin-top: 2.35rem;
+      width: min(100%, 360px);
+      height: 58px;
+      border: 0;
+      border-radius: 999px;
+      background: var(--button);
+      color: #fff;
+      font: inherit;
+      font-size: 1.02rem;
+      font-weight: 500;
+      cursor: pointer;
+      box-shadow:
+        0 12px 28px rgba(0,0,0,.12),
+        inset 0 1px 0 rgba(255,255,255,.1);
+      transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        background .2s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .retry:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 16px 34px rgba(0,0,0,.16),
+        inset 0 1px 0 rgba(255,255,255,.1);
+    }
+
+    .retry:active {
+      transform: scale(.97);
+      box-shadow: 0 8px 18px rgba(0,0,0,.12);
+    }
+
+    .retry.loading {
+      pointer-events: none;
+      opacity: .75;
+    }
+
+    @keyframes enter {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(-1vh);
+      }
+    }
+
+    @media (max-width: 380px) {
+      .page {
+        padding: 20px;
+      }
+
+      h1 {
+        margin-top: 1.7rem;
+      }
+
+      .message {
+        margin-top: 1rem;
+      }
+
+      .retry {
+        margin-top: 1.9rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .content {
+        animation: none;
+      }
+
+      .retry {
+        transition: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="content" aria-labelledby="title">
+      <div class="code" aria-label="Kode error 503">503</div>
+
+      <h1 id="title">Layanan tidak tersedia</h1>
+
+      <p class="message">
+        Kami sedang melakukan perbaikan.<br>
+        Silakan coba lagi nanti.
+      </p>
+
+      <button class="retry" id="retryButton" type="button">
+        Coba Lagi
+      </button>
+    </section>
+  </main>
+
+  <script>
+    const retryButton = document.getElementById("retryButton");
+
+    retryButton.addEventListener("click", () => {
+      retryButton.classList.add("loading");
+      retryButton.textContent = "Memuat...";
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
+    });
+  </script>
+</body>
+</html>
